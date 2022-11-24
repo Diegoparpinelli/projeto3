@@ -4,6 +4,7 @@ const { addEvents }= require("../controllers/addEventsController")
 const router = Router();
 
 router.post("/", (req, res)=>{
+    console.log(req.body)
     addEvents(req.body).then(data=> res.send(data).status(201)).catch(data=> res.send(data).status(500));
 })
 

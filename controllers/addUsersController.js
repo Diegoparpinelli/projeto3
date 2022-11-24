@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 const eventModel = require("../models/event");
-const {psGeneratorService} = require("../services/psGeneratorService");
+const userModel = require("../models/user");
+const { psGeneratorService } = require("../services/psGeneratorService")
 
-async function addEvents(contentEvent){
+async function addUsers(contentUser){
     try {
-        console.log(contentEvent)
         await mongoose.connect(`mongodb://0.0.0.0:27017/presencaqrcode`);
         console.log("Conectado ao db, com sucesso!");
-        contentEvent.ps = psGeneratorService(20)
+
+        const user = new userModel(contentUser.eventName, contentUser.name, psGeneratorService(8), contentUser.email, contentUser.phone, contentUser.present, contentUser.acces, contentUser.CPF)
         
-        const data = await new eventModel(contentEvent).save();
+        const data = await eventModel.updateOne({name: user.eventName},{$push: {users: user.user}});
 
         await mongoose.disconnect();
         console.log("Desconectado!");
@@ -24,5 +25,4 @@ async function addEvents(contentEvent){
 }
 
 
-
-module.exports = {addEvents}
+module.exports = {addUsers}

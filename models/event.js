@@ -15,14 +15,14 @@ const event = mongoose.Schema({
     },
     quantPart: {
         type: Number,
-        required: true
+        required: false
     },
     users: {
-        type: [String],
+        type: [Object],
         required: true
     },
     acces: {
-        type: [String],
+        type: [Object],
         required: false
     }
 
